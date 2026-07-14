@@ -97,26 +97,18 @@ async function login(){
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-
 const {data,error} = await supabaseClient.auth.signInWithPassword({
 email: email,
 password: password
 });
 
-
 if(error){
-
-document.getElementById("loginMessage").innerHTML =
-"Login failed";
-
+document.getElementById("loginMessage").innerHTML = error.message;
 return;
-
 }
-
 
 document.getElementById("login").style.display="none";
 document.getElementById("app").style.display="block";
-
 
 }
 
