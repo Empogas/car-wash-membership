@@ -130,6 +130,33 @@ document.getElementById("login").style.display="block";
 
 }
 
+  async function lookupMember() {
+
+  let id = document.getElementById("customerID").value;
+
+  const { data, error } = await supabaseClient
+    .from("Members")
+    .select("*")
+    .eq("customer_id", id)
+    .single();
+
+  if (error || !data) {
+    document.getElementById("result").innerHTML = `
+      <hr>
+      <div class="expired">NOT FOUND</div>
+    `;
+    return;
+  }
+
+  document.getElementById("result").innerHTML = `
+    <hr>
+    <div class="${data.status.toLowerCase()}">${data.status}</div>
+    <p><b>${data.first_name} ${data.last_name}</b></p>
+    <p>Membership: ${data.membership}</p>
+    <p>Plate: ${data.license_plate}</p>
+    <p>Expires: ${data.expires_at}</p>
+  `;
+}
 </script>
 
 </body>
