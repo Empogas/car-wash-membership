@@ -92,41 +92,38 @@ const supabaseClient = supabase.createClient(
 );
 
 
-async function login(){
-  alert("Login button works");
-}
+async function login() {
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const {data,error} = await supabaseClient.auth.signInWithPassword({
-email: email,
-password: password
-});
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
 
-if(error){
-document.getElementById("loginMessage").innerHTML = error.message;
-return;
-}
+  if (error) {
+    document.getElementById("loginMessage").innerHTML = error.message;
+    return;
+  }
 
-document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
 
 }
 
 
-async function logout(){
+async function logout() {
 
-await supabaseClient.auth.signOut();
+  await supabaseClient.auth.signOut();
 
-document.getElementById("app").style.display="none";
-document.getElementById("login").style.display="block";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login").style.display = "block";
 
 }
 
-  async function lookupMember() {
-  alert("Button works!");
-}
+
+async function lookupMember() {
 
   let id = document.getElementById("customerID").value;
 
@@ -136,23 +133,36 @@ document.getElementById("login").style.display="block";
     .eq("customer_id", id)
     .single();
 
+
   if (error || !data) {
-    document.getElementById("result").innerHTML = `
-      <hr>
-      <div class="expired">NOT FOUND</div>
-    `;
+
+    document.getElementById("result").innerHTML =
+    "<hr><div class='expired'>NOT FOUND</div>";
+
     return;
   }
 
+
   document.getElementById("result").innerHTML = `
-    <hr>
-    <div class="${data.status.toLowerCase()}">${data.status}</div>
-    <p><b>${data.first_name} ${data.last_name}</b></p>
-    <p>Membership: ${data.membership}</p>
-    <p>Plate: ${data.license_plate}</p>
-    <p>Expires: ${data.expires_at}</p>
+
+  <hr>
+
+  <div class="${data.status.toLowerCase()}">
+  ${data.status}
+  </div>
+
+  <p><b>${data.first_name} ${data.last_name}</b></p>
+
+  <p>Membership: ${data.membership}</p>
+
+  <p>Plate: ${data.license_plate}</p>
+
+  <p>Expires: ${data.expires_at}</p>
+
   `;
+
 }
+
 </script>
 
 </body>
