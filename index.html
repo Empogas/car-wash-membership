@@ -42,6 +42,7 @@
       font-size: 16px;
     }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -58,31 +59,44 @@
 
 
 <script>
-function lookupMember() {
+
+const SUPABASE_URL = "https://yqrgleruaxcjqvgnetam.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vI4waNrvpVZ_iz65H4ZxXw_VKGSnhMF";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function lookupMember() {
 
   let id = document.getElementById("customerID").value;
 
-  if(id === "CW-000001") {
+  const { data, error } = await supabaseClient
+    .from("Members")
+    .select("*")
+    .eq("customer_id", id)
+    .single();
 
-    document.getElementById("result").innerHTML = `
-      <hr>
-      <div class="active">ACTIVE</div>
-      <p><b>John Smith</b></p>
-      <p>Membership: Unlimited</p>
-      <p>Plate: ABC123</p>
-      <p>Expires: 2026-08-13</p>
-    `;
-
-  } else {
-
+  if (error || !data) {
     document.getElementById("result").innerHTML = `
       <hr>
       <div class="expired">NOT FOUND</div>
     `;
-
+    return;
   }
 
+  document.getElementById("result").innerHTML = `
+    <hr>
+    <div class="${data.status.toLowerCase()}">${data.status}</div>
+    <p><b>${data.first_name} ${data.last_name}</b></p>
+    <p>Membership: ${data.membership}</p>
+    <p>Plate: ${data.license_plate}</p>
+    <p>Expires: ${data.expires_at}</p>
+  `;
+
 }
+
 </script>
 
 </body>
