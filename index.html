@@ -41,6 +41,24 @@
       margin-top: 10px;
       font-size: 16px;
     }
+
+    .membership-card {
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  max-width:350px;
+  margin:auto;
+}
+
+.membership-card img {
+  max-width:250px;
+}
+
+.card-qr {
+  margin-top:15px;
+}
+    <img class="card-qr" src="${data.qr_image}" width="150">
   </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -165,8 +183,13 @@ const difference = expiration - today;
 const daysRemaining = Math.ceil(
   difference / (1000 * 60 * 60 * 24)
 );
- document.getElementById("result").innerHTML = `
+document.getElementById("result").innerHTML = `
 
+<div class="membership-card">
+
+<img src="emporium-logo.png" width="250">
+
+<h2>${data.first_name} ${data.last_name}</h2>
 <hr>
 
 <div class="${daysRemaining > 0 ? "active" : "expired"}">
