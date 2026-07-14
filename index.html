@@ -43,6 +43,9 @@
     }
   </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
 </head>
 
 <body>
@@ -68,9 +71,13 @@
 
   <h2>Member Lookup</h2>
 
-  <input id="customerID" placeholder="Customer ID">
+<input id="customerID" placeholder="Customer ID">
 
-  <button onclick="lookupMember()">Search</button>
+<button onclick="lookupMember()">Search</button>
+
+<button onclick="startScanner()">📷 Scan QR Code</button>
+
+<div id="reader" style="width:300px;margin-top:20px;"></div>
 
   <button onclick="logout()">Logout</button>
 
@@ -187,6 +194,34 @@ window.onload = function(){
   }
 
 }
+
+function startScanner(){
+
+const scanner = new Html5Qrcode("reader");
+
+scanner.start(
+  { facingMode: "environment" },
+  {
+    fps: 10,
+    qrbox: 250
+  },
+  (decodedText)=>{
+
+    const url = new URL(decodedText);
+
+    const id = url.searchParams.get("id");
+
+    document.getElementById("customerID").value = id;
+
+    scanner.stop();
+
+    lookupMember();
+
+  }
+);
+
+}
+
 </script>
 
 </body>
