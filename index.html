@@ -154,8 +154,8 @@ const daysRemaining = Math.ceil(
 
 <hr>
 
-<div class="${data.status.toLowerCase()}">
-${data.status === "Active" ? "🟢 ACTIVE MEMBER" : "🔴 EXPIRED"}
+<div class="${daysRemaining > 0 ? "active" : "expired"}">
+${daysRemaining > 0 ? "🟢 ACTIVE MEMBER" : "🔴 EXPIRED"}
 </div>
 
 <p><b>${data.first_name} ${data.last_name}</b></p>
