@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Car Wash Membership</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
 
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 2px 10px #ccc;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .active {
+      color: green;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .expired {
+      color: red;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🚗 Car Wash</h1>
+
+  <input id="customerID" placeholder="Scan or enter Customer ID">
+
+  <button onclick="lookupMember()">Search</button>
+
+  <div id="result"></div>
+</div>
+
+
+<script>
+function lookupMember() {
+
+  let id = document.getElementById("customerID").value;
+
+  if(id === "CW-000001") {
+
+    document.getElementById("result").innerHTML = `
+      <hr>
+      <div class="active">ACTIVE</div>
+      <p><b>John Smith</b></p>
+      <p>Membership: Unlimited</p>
+      <p>Plate: ABC123</p>
+      <p>Expires: 2026-08-13</p>
+    `;
+
+  } else {
+
+    document.getElementById("result").innerHTML = `
+      <hr>
+      <div class="expired">NOT FOUND</div>
+    `;
+
+  }
+
+}
+</script>
+
+</body>
+</html>
