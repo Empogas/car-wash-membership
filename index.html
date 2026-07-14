@@ -58,7 +58,6 @@
 .card-qr {
   margin-top:15px;
 }
-    <img class="card-qr" src="${data.qr_image}" width="150">
   </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -207,6 +206,8 @@ ${daysRemaining > 0 ? "🟢 ACTIVE MEMBER" : "🔴 EXPIRED"}
 
 `;
 
+<img class="card-qr" src="${data.qr_image}" width="150">
+  
 }
 window.onload = function(){
 
