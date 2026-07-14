@@ -48,13 +48,36 @@
 <body>
 
 <div class="card">
-  <h1>Emporium Car Wash</h1>
 
-  <input id="customerID" placeholder="Scan or enter Customer ID">
+<h1>🚗 Car Wash</h1>
+
+<div id="login">
+  <h2>Employee Login</h2>
+
+  <input id="email" placeholder="Email">
+
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <div id="loginMessage"></div>
+</div>
+
+
+<div id="app" style="display:none">
+
+  <h2>Member Lookup</h2>
+
+  <input id="customerID" placeholder="Customer ID">
 
   <button onclick="lookupMember()">Search</button>
 
+  <button onclick="logout()">Logout</button>
+
   <div id="result"></div>
+
+</div>
+
 </div>
 
 
@@ -68,32 +91,42 @@ const supabaseClient = supabase.createClient(
   SUPABASE_KEY
 );
 
-async function lookupMember() {
 
-  let id = document.getElementById("customerID").value;
+async function login(){
 
-  const { data, error } = await supabaseClient
-    .from("Members")
-    .select("*")
-    .eq("customer_id", id)
-    .single();
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-  if (error || !data) {
-    document.getElementById("result").innerHTML = `
-      <hr>
-      <div class="expired">NOT FOUND</div>
-    `;
-    return;
-  }
 
-  document.getElementById("result").innerHTML = `
-    <hr>
-    <div class="${data.status.toLowerCase()}">${data.status}</div>
-    <p><b>${data.first_name} ${data.last_name}</b></p>
-    <p>Membership: ${data.membership}</p>
-    <p>Plate: ${data.license_plate}</p>
-    <p>Expires: ${data.expires_at}</p>
-  `;
+const {data,error} = await supabaseClient.auth.signInWithPassword({
+email: email,
+password: password
+});
+
+
+if(error){
+
+document.getElementById("loginMessage").innerHTML =
+"Login failed";
+
+return;
+
+}
+
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+
+}
+
+
+async function logout(){
+
+await supabaseClient.auth.signOut();
+
+document.getElementById("app").style.display="none";
+document.getElementById("login").style.display="block";
 
 }
 
