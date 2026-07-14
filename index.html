@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Emporium Memberships</title>
+  <title>Emporium Car Wash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -49,7 +49,7 @@
 
 <div class="card">
 
-<h1>🚗 Car Wash</h1>
+<h1>🚗 Emporium Car Wash</h1>
 
 <div id="login">
   <h2>Employee Login</h2>
@@ -143,23 +143,25 @@ async function lookupMember() {
   }
 
 
-  document.getElementById("result").innerHTML = `
+ document.getElementById("result").innerHTML = `
 
-  <hr>
+<hr>
 
-  <div class="${data.status.toLowerCase()}">
-  ${data.status}
-  </div>
+<div class="${data.status.toLowerCase()}">
+${data.status === "Active" ? "🟢 ACTIVE MEMBER" : "🔴 EXPIRED"}
+</div>
 
-  <p><b>${data.first_name} ${data.last_name}</b></p>
+<p><b>${data.first_name} ${data.last_name}</b></p>
 
-  <p>Membership: ${data.membership}</p>
+<p>Membership: ${data.membership}</p>
 
-  <p>Plate: ${data.license_plate}</p>
+<p>Plate: ${data.license_plate}</p>
 
-  <p>Expires: ${data.expires_at}</p>
+<p>Vehicle: ${data.vehicle_color} ${data.vehicle_make} ${data.vehicle_model}</p>
 
-  `;
+<p>Expires: ${data.expires_at}</p>
+
+`;
 
 }
 window.onload = function(){
